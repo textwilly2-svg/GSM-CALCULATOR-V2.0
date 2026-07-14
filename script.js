@@ -55,22 +55,20 @@ function calculate() {
 
     let totalWeftWeight = weft1Weight + weft2Weight;
 
-    // Grand Total
+    // Grand Total Weight
     let grandTotal = totalWarpWeight + totalWeftWeight;
 
-    // Calculate individual blend % based on the exact weight proportion of total warp/weft
+    // CRITICAL FIX: Blend % calculated out of Grand Total (Matches Excel sheet exactly)
     let warp1BlendPct = 0;
     let warp2BlendPct = 0;
-    if (totalWarpWeight > 0) {
-        warp1BlendPct = (warp1Weight / totalWarpWeight) * 100;
-        warp2BlendPct = (warp2Weight / totalWarpWeight) * 100;
-    }
-
     let weft1BlendPct = 0;
     let weft2BlendPct = 0;
-    if (totalWeftWeight > 0) {
-        weft1BlendPct = (weft1Weight / totalWeftWeight) * 100;
-        weft2BlendPct = (weft2Weight / totalWeftWeight) * 100;
+
+    if (grandTotal > 0) {
+        warp1BlendPct = (warp1Weight / grandTotal) * 100;
+        warp2BlendPct = (warp2Weight / grandTotal) * 100;
+        weft1BlendPct = (weft1Weight / grandTotal) * 100;
+        weft2BlendPct = (weft2Weight / grandTotal) * 100;
     }
 
     // Linear Weight using your exact formula
@@ -82,11 +80,11 @@ function calculate() {
         gsm = linearWeight / (fw * 0.0254);
     }
 
-    // Display Results to the updated index.html elements
+    // Display Results
     document.getElementById("warpWeight").innerHTML = totalWarpWeight.toFixed(2);
     document.getElementById("weftWeight").innerHTML = totalWeftWeight.toFixed(2);
     
-    // Updated display elements for separated blends
+    // Display the corrected Blend Percentages
     document.getElementById("warp1Blend").innerHTML = warp1BlendPct.toFixed(2) + "%";
     document.getElementById("warp2Blend").innerHTML = warp2BlendPct.toFixed(2) + "%";
     document.getElementById("weft1Blend").innerHTML = weft1BlendPct.toFixed(2) + "%";
@@ -105,7 +103,7 @@ function convertCount() {
     document.getElementById("leaNm").value = (nm * 1.693).toFixed(2);
 }
 
-// Auto Save & Live Calculations on Input Changes
+// Auto Save & Live Calculations
 const inputs = document.querySelectorAll("input");
 inputs.forEach(input => {
     input.addEventListener("input", () => {
