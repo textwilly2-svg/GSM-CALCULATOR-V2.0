@@ -1,20 +1,35 @@
-.input-group {
-  margin-bottom: 15px;
-}
-.input-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #333;
-}
-.input-group input {
+table {
   width: 100%;
-  padding: 8px 12px;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #1565C0;
+  color: white;
+}
+
+/* Makes sure the input fields look clean inside the table cells */
+table input[type="number"] {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.blend-detail {
-  font-size: 0.9em;
-  color: #666;
-  margin-top: 2px;
+
+/* Responsive adjustment for smaller mobile screens */
+@media screen and (max-width: 600px) {
+  th, td {
+    padding: 4px;
+    font-size: 12px;
+  }
 }
