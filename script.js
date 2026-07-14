@@ -54,7 +54,7 @@ function calculate() {
 
     if (weftPatternTotal > 0 && reedSpace > 0 && pick > 0) {
         if (weftPattern1 > 0 && weftCount1 > 0) {
-            let picks1 = (pick * weftPattern1) / weftPatternTotal;
+            let picks1 = (pick * weftPattern1) / weftPatternTotal; // Typo fixed here!
             weft1Weight = (picks1 * reedSpace * weftCrimp) / (weftCount1 * 840 * 0.00059);
         }
         if (weftPattern2 > 0 && weftCount2 > 0) {
