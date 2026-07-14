@@ -1,29 +1,145 @@
-<!-- Warp Blend Inputs -->
-<div class="input-group">
-  <label>Warp Blend %</label>
-  <div style="display: flex; gap: 10px;">
-    <input type="number" id="warpBlend1" placeholder="Fiber 1 % (e.g., 60)" min="0" max="100">
-    <input type="number" id="warpBlend2" placeholder="Fiber 2 % (e.g., 40)" min="0" max="100">
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1565C0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Textile GSM Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Textile GSM Calculator</h2>
+
+  <label>Reed</label>
+  <input type="number" id="reed" placeholder="Enter Reed">
+
+  <label>Pick</label>
+  <input type="number" id="pick" placeholder="Enter Pick">
+
+  <label>Reed Space</label>
+  <input type="number" id="reedSpace" placeholder="Enter Reed Space">
+
+  <label>Finish Width (FW)</label>
+  <input type="number" id="fw" placeholder="Enter Finish Width">
+
+  <hr>
+
+  <h3>Warp</h3>
+  <table>
+    <tr>
+      <th>Yarn</th>
+      <th>Count</th>
+      <th>Pattern</th>
+      <th>Blend 1 %</th>
+      <th>Blend 2 %</th>
+    </tr>
+    <tr>
+      <td><strong>Warp 1</strong></td>
+      <td><input type="number" id="warpCount1" placeholder="Count"></td>
+      <td><input type="number" id="warpPattern1" placeholder="Ends"></td>
+      <td><input type="number" id="warp1Blend1" placeholder="Fiber 1 %"></td>
+      <td><input type="number" id="warp1Blend2" placeholder="Fiber 2 %"></td>
+    </tr>
+    <tr>
+      <td><strong>Warp 2</strong></td>
+      <td><input type="number" id="warpCount2" placeholder="Count"></td>
+      <td><input type="number" id="warpPattern2" placeholder="Ends"></td>
+      <td><input type="number" id="warp2Blend1" placeholder="Fiber 1 %"></td>
+      <td><input type="number" id="warp2Blend2" placeholder="Fiber 2 %"></td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <h3>Weft</h3>
+  <table>
+    <tr>
+      <th>Yarn</th>
+      <th>Count</th>
+      <th>Pattern</th>
+      <th>Blend 1 %</th>
+      <th>Blend 2 %</th>
+    </tr>
+    <tr>
+      <td><strong>Weft 1</strong></td>
+      <td><input type="number" id="weftCount1" placeholder="Count"></td>
+      <td><input type="number" id="weftPattern1" placeholder="Picks"></td>
+      <td><input type="number" id="weft1Blend1" placeholder="Fiber 1 %"></td>
+      <td><input type="number" id="weft1Blend2" placeholder="Fiber 2 %"></td>
+    </tr>
+    <tr>
+      <td><strong>Weft 2</strong></td>
+      <td><input type="number" id="weftCount2" placeholder="Count"></td>
+      <td><input type="number" id="weftPattern2" placeholder="Picks"></td>
+      <td><input type="number" id="weft2Blend1" placeholder="Fiber 1 %"></td>
+      <td><input type="number" id="weft2Blend2" placeholder="Fiber 2 %"></td>
+    </tr>
+  </table>
+
+  <br>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <hr>
+
+  <h3>Yarn Count Converter</h3>
+  <label>Ne</label>
+  <input type="number" id="ne" placeholder="Enter Ne" oninput="convertCount()">
+
+  <label>Lea (from Ne)</label>
+  <input type="number" id="leaNe" readonly>
+
+  <label>Nm</label>
+  <input type="number" id="nm" placeholder="Enter Nm" oninput="convertCount()">
+
+  <label>Lea (from Nm)</label>
+  <input type="number" id="leaNm" readonly>
+
+  <hr>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <td>Total Warp Weight</td>
+      <td><span id="warpWeight">0.00</span></td>
+    </tr>
+    <tr>
+      <td>Total Weft Weight</td>
+      <td><span id="weftWeight">0.00</span></td>
+    </tr>
+    <tr>
+      <td>Warp Blend %</td>
+      <td><span id="warpBlend">0.00%</span></td>
+    </tr>
+    <tr>
+      <td>Weft Blend %</td>
+      <td><span id="weftBlend">0.00%</span></td>
+    </tr>
+    <tr>
+      <td>Grand Total</td>
+      <td><span id="grandTotal">0.00</span></td>
+    </tr>
+    <tr>
+      <td>Linear Weight</td>
+      <td><span id="linearWeight">0.00</span></td>
+    </tr>
+    <tr>
+      <td><strong>GSM</strong></td>
+      <td><strong><span id="gsm">0.00</span></strong></td>
+    </tr>
+  </table>
+
 </div>
 
-<!-- Weft Blend Inputs -->
-<div class="input-group">
-  <label>Weft Blend %</label>
-  <div style="display: flex; gap: 10px;">
-    <input type="number" id="weftBlend1" placeholder="Fiber 1 % (e.g., 65)" min="0" max="100">
-    <input type="number" id="weftBlend2" placeholder="Fiber 2 % (e.g., 35)" min="0" max="100">
-  </div>
-</div>
-
-<!-- Output Section (Place this where your results are displayed) -->
-<div class="results-box">
-  <h3>GSM Breakdown</h3>
-  <p>Total Warp GSM: <span id="totalWarpGsm">0.00</span></p>
-  <p class="blend-detail">Warp Fiber 1: <span id="warpFiber1Gsm">0.00</span> GSM | Warp Fiber 2: <span id="warpFiber2Gsm">0.00</span> GSM</p>
-  <hr>
-  <p>Total Weft GSM: <span id="totalWeftGsm">0.00</span></p>
-  <p class="blend-detail">Weft Fiber 1: <span id="weftFiber1Gsm">0.00</span> GSM | Weft Fiber 2: <span id="weftFiber2Gsm">0.00</span> GSM</p>
-  <hr>
-  <h2>Total Fabric GSM: <span id="finalGsm">0.00</span></h2>
-</div>
+<script src="script.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+</body>
+</html>
