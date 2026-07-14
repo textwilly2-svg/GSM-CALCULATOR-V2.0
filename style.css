@@ -1,1 +1,20 @@
-body{font-family:Arial;}
+.input-group {
+  margin-bottom: 15px;
+}
+.input-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+.input-group input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.blend-detail {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 2px;
+}
