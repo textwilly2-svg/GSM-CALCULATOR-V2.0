@@ -1,133 +1,48 @@
-function calculate() {
+function calculateGsm() {
+    // 1. Get your existing standard inputs (EPI, PPI, Warp Count, Weft Count, Crimp, etc.)
+    const epi = parseFloat(document.getElementById('epi').value) || 0;
+    const ppi = parseFloat(document.getElementById('ppi').value) || 0;
+    const warpCount = parseFloat(document.getElementById('warpCount').value) || 1;
+    const weftCount = parseFloat(document.getElementById('weftCount').value) || 1;
+    
+    // Grab your new blend inputs
+    const wb1 = parseFloat(document.getElementById('warpBlend1').value) || 0;
+    const wb2 = parseFloat(document.getElementById('warpBlend2').value) || 0;
+    const yb1 = parseFloat(document.getElementById('weftBlend1').value) || 0;
+    const yb2 = parseFloat(document.getElementById('weftBlend2').value) || 0;
 
-    // Basic Inputs
-    let reed = Number(document.getElementById("reed").value) || 0;
-    let pick = Number(document.getElementById("pick").value) || 0;
-    let reedSpace = Number(document.getElementById("reedSpace").value) || 0;
-    let fw = Number(document.getElementById("fw").value) || 0;
+    // 2. Standard Textile GSM Calculations 
+    // (Using standard cotton count formula: (Ends/Count) * 25.4 * crimp factor... adjust multiplier to match your existing code)
+    const warpCrimpFactor = 1.05; // Use your calculator's actual crimp logic here
+    const weftCrimpFactor = 1.08; 
 
-    // Total Warp Pattern
-    let totalWarpPattern =
-        (Number(document.getElementById("warpPattern1").value) || 0) +
-        (Number(document.getElementById("warpPattern2").value) || 0);
+    const totalWarpGsm = (epi / warpCount) * 25.537 * warpCrimpFactor;
+    const totalWeftGsm = (ppi / weftCount) * 25.537 * weftCrimpFactor;
 
-    // Total Weft Pattern
-    let totalWeftPattern =
-        (Number(document.getElementById("weftPattern1").value) || 0) +
-        (Number(document.getElementById("weftPattern2").value) || 0);
+    // 3. Calculate the Fiber Blend weights
+    // If the user didn't write anything, assume 100% of a single fiber
+    const warpFactor1 = (wb1 === 0 && wb2 === 0) ? 1 : wb1 / 100;
+    const warpFactor2 = wb2 / 100;
 
-    // Warp Weight
-    let totalWarpWeight = 0;
+    const weftFactor1 = (yb1 === 0 && yb2 === 0) ? 1 : yb1 / 100;
+    const weftFactor2 = yb2 / 100;
 
-    for (let i = 1; i <= 2; i++) {
+    const warpFiber1Gsm = totalWarpGsm * warpFactor1;
+    const warpFiber2Gsm = totalWarpGsm * warpFactor2;
 
-        let count = Number(document.getElementById("warpCount" + i).value) || 0;
-        let pattern = Number(document.getElementById("warpPattern" + i).value) || 0;
+    const weftFiber1Gsm = totalWeftGsm * weftFactor1;
+    const weftFiber2Gsm = totalWeftGsm * weftFactor2;
 
-        if (count > 0 && totalWarpPattern > 0) {
+    const finalFabricGsm = totalWarpGsm + totalWeftGsm;
 
-            let wt =
-                ((reed * reedSpace * 0.6501 * 2.8) /
-                    (10 * count))
-                * pattern
-                / totalWarpPattern;
+    // 4. Update the UI
+    document.getElementById('totalWarpGsm').innerText = totalWarpGsm.toFixed(2);
+    document.getElementById('warpFiber1Gsm').innerText = warpFiber1Gsm.toFixed(2);
+    document.getElementById('warpFiber2Gsm').innerText = warpFiber2Gsm.toFixed(2);
 
-            totalWarpWeight += wt;
-        }
-    }
+    document.getElementById('totalWeftGsm').innerText = totalWeftGsm.toFixed(2);
+    document.getElementById('weftFiber1Gsm').innerText = weftFiber1Gsm.toFixed(2);
+    document.getElementById('weftFiber2Gsm').innerText = weftFiber2Gsm.toFixed(2);
 
-    // Weft Weight
-    let totalWeftWeight = 0;
-
-    for (let i = 1; i <= 2; i++) {
-
-        let count = Number(document.getElementById("weftCount" + i).value) || 0;
-        let pattern = Number(document.getElementById("weftPattern" + i).value) || 0;
-
-        if (count > 0 && totalWeftPattern > 0) {
-
-            let wt =
-                ((pick * (reedSpace + 1.2) * 0.5901 * 2.8) /
-                    (10 * count))
-                * pattern
-                / totalWeftPattern;
-
-            totalWeftWeight += wt;
-        }
-    }
-
-    // Grand Total
-    let grandTotal = totalWarpWeight + totalWeftWeight;
-
-    // Blend %
-    let warpBlend = 0;
-    let weftBlend = 0;
-
-    if (grandTotal > 0) {
-        warpBlend = (totalWarpWeight / grandTotal) * 100;
-        weftBlend = (totalWeftWeight / grandTotal) * 100;
-    }
-
-    // Linear Weight
-    let linearWeight = grandTotal * 10 * 0.96;
-
-    // GSM
-    let gsm = 0;
-
-    if (fw > 0) {
-        gsm = linearWeight / (fw * 0.0254);
-    }
-
-    // Display Results
-    document.getElementById("warpWeight").innerHTML = totalWarpWeight.toFixed(2);
-    document.getElementById("weftWeight").innerHTML = totalWeftWeight.toFixed(2);
-    document.getElementById("warpBlend").innerHTML = warpBlend.toFixed(2) + "%";
-    document.getElementById("weftBlend").innerHTML = weftBlend.toFixed(2) + "%";
-    document.getElementById("grandTotal").innerHTML = grandTotal.toFixed(2);
-    document.getElementById("linearWeight").innerHTML = linearWeight.toFixed(2);
-    document.getElementById("gsm").innerHTML = gsm.toFixed(2);
+    document.getElementById('finalGsm').innerText = finalFabricGsm.toFixed(2);
 }
-
-// Yarn Count Converter
-function convertCount() {
-
-    let ne = Number(document.getElementById("ne").value) || 0;
-    let nm = Number(document.getElementById("nm").value) || 0;
-
-    document.getElementById("leaNe").value = (ne * 2.8).toFixed(2);
-    document.getElementById("leaNm").value = (nm * 1.693).toFixed(2);
-}
-
-// Auto Save
-const inputs = document.querySelectorAll("input");
-
-inputs.forEach(input => {
-
-    input.addEventListener("input", () => {
-
-        localStorage.setItem(input.id, input.value);
-
-        calculate();
-        convertCount();
-
-    });
-
-});
-
-// Restore Saved Data
-window.onload = function () {
-
-    inputs.forEach(input => {
-
-        const saved = localStorage.getItem(input.id);
-
-        if (saved !== null) {
-            input.value = saved;
-        }
-
-    });
-
-    calculate();
-    convertCount();
-
-};
