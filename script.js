@@ -16,9 +16,7 @@ function calculate() {
         (Number(document.getElementById("weftPattern1").value) || 0) +
         (Number(document.getElementById("weftPattern2").value) || 0);
 
-    // ==========================
     // Warp Weight
-    // ==========================
     let totalWarpWeight = 0;
 
     for (let i = 1; i <= 2; i++) {
@@ -38,9 +36,7 @@ function calculate() {
         }
     }
 
-    // ==========================
     // Weft Weight
-    // ==========================
     let totalWeftWeight = 0;
 
     for (let i = 1; i <= 2; i++) {
@@ -90,40 +86,48 @@ function calculate() {
     document.getElementById("grandTotal").innerHTML = grandTotal.toFixed(2);
     document.getElementById("linearWeight").innerHTML = linearWeight.toFixed(2);
     document.getElementById("gsm").innerHTML = gsm.toFixed(2);
+}
 
-// Save all input values automatically
-const inputs = document.querySelectorAll("input");
-
-inputs.forEach(input => {
-    input.addEventListener("input", () => {
-        localStorage.setItem(input.id, input.value);
-    });
-});
-
-// Restore values when the app opens
-window.onload = function () {
-
-    inputs.forEach(input => {
-        const saved = localStorage.getItem(input.id);
-        if (saved !== null) {
-            input.value = saved;
-        }
-    });
-
-    calculate();
-
+// Yarn Count Converter
 function convertCount() {
 
     let ne = Number(document.getElementById("ne").value) || 0;
     let nm = Number(document.getElementById("nm").value) || 0;
 
-    // Ne to Lea
-    let leaFromNe = ne * 2.8;
-
-    // Nm to Lea
-    let leaFromNm = nm * 1.693;
-
-    document.getElementById("leaNe").value = leaFromNe.toFixed(2);
-    document.getElementById("leaNm").value = leaFromNm.toFixed(2);
-
+    document.getElementById("leaNe").value = (ne * 2.8).toFixed(2);
+    document.getElementById("leaNm").value = (nm * 1.693).toFixed(2);
 }
+
+// Auto Save
+const inputs = document.querySelectorAll("input");
+
+inputs.forEach(input => {
+
+    input.addEventListener("input", () => {
+
+        localStorage.setItem(input.id, input.value);
+
+        calculate();
+        convertCount();
+
+    });
+
+});
+
+// Restore Saved Data
+window.onload = function () {
+
+    inputs.forEach(input => {
+
+        const saved = localStorage.getItem(input.id);
+
+        if (saved !== null) {
+            input.value = saved;
+        }
+
+    });
+
+    calculate();
+    convertCount();
+
+};
