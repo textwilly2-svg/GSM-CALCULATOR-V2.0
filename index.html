@@ -34,22 +34,16 @@
       <th>Yarn</th>
       <th>Count</th>
       <th>Pattern</th>
-      <th>Blend 1 %</th>
-      <th>Blend 2 %</th>
     </tr>
     <tr>
       <td><strong>Warp 1</strong></td>
-      <td><input type="number" id="warpCount1" placeholder="Count"></td>
-      <td><input type="number" id="warpPattern1" placeholder="Ends"></td>
-      <td><input type="number" id="warp1Blend1" placeholder="Fiber 1 %"></td>
-      <td><input type="number" id="warp1Blend2" placeholder="Fiber 2 %"></td>
+      <td><input type="number" id="warpCount1"></td>
+      <td><input type="number" id="warpPattern1"></td>
     </tr>
     <tr>
       <td><strong>Warp 2</strong></td>
-      <td><input type="number" id="warpCount2" placeholder="Count"></td>
-      <td><input type="number" id="warpPattern2" placeholder="Ends"></td>
-      <td><input type="number" id="warp2Blend1" placeholder="Fiber 1 %"></td>
-      <td><input type="number" id="warp2Blend2" placeholder="Fiber 2 %"></td>
+      <td><input type="number" id="warpCount2"></td>
+      <td><input type="number" id="warpPattern2"></td>
     </tr>
   </table>
 
@@ -61,22 +55,16 @@
       <th>Yarn</th>
       <th>Count</th>
       <th>Pattern</th>
-      <th>Blend 1 %</th>
-      <th>Blend 2 %</th>
     </tr>
     <tr>
       <td><strong>Weft 1</strong></td>
-      <td><input type="number" id="weftCount1" placeholder="Count"></td>
-      <td><input type="number" id="weftPattern1" placeholder="Picks"></td>
-      <td><input type="number" id="weft1Blend1" placeholder="Fiber 1 %"></td>
-      <td><input type="number" id="weft1Blend2" placeholder="Fiber 2 %"></td>
+      <td><input type="number" id="weftCount1"></td>
+      <td><input type="number" id="weftPattern1"></td>
     </tr>
     <tr>
       <td><strong>Weft 2</strong></td>
-      <td><input type="number" id="weftCount2" placeholder="Count"></td>
-      <td><input type="number" id="weftPattern2" placeholder="Picks"></td>
-      <td><input type="number" id="weft2Blend1" placeholder="Fiber 1 %"></td>
-      <td><input type="number" id="weft2Blend2" placeholder="Fiber 2 %"></td>
+      <td><input type="number" id="weftCount2"></td>
+      <td><input type="number" id="weftPattern2"></td>
     </tr>
   </table>
 
@@ -108,16 +96,24 @@
       <td><span id="warpWeight">0.00</span></td>
     </tr>
     <tr>
+      <td>Warp 1 Blend %</td>
+      <td><span id="warp1Blend">0.00%</span></td>
+    </tr>
+    <tr>
+      <td>Warp 2 Blend %</td>
+      <td><span id="warp2Blend">0.00%</span></td>
+    </tr>
+    <tr>
       <td>Total Weft Weight</td>
       <td><span id="weftWeight">0.00</span></td>
     </tr>
     <tr>
-      <td>Warp Blend %</td>
-      <td><span id="warpBlend">0.00%</span></td>
+      <td>Weft 1 Blend %</td>
+      <td><span id="weft1Blend">0.00%</span></td>
     </tr>
     <tr>
-      <td>Weft Blend %</td>
-      <td><span id="weftBlend">0.00%</span></td>
+      <td>Weft 2 Blend %</td>
+      <td><span id="weft2Blend">0.00%</span></td>
     </tr>
     <tr>
       <td>Grand Total</td>
